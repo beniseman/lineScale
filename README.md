@@ -2,7 +2,7 @@
 
 ## Overview
 
-The **LineScale** library is an early-stage, experimental library for interfacing with the [LineScale dynamometer](https://www.linegrip.com/linescale-3/) from **LineGrip Corp.** It is built for **ESP32** using the **Arduino** framework, and **Bluetooth Low Energy (BLE)** for communication. This is my first attempt at coding a library and I am using AI for code completion. Expect bugs, strange choices, incomplete documentation, sporadic updates at best, and major changes that break code.
+The **LineScale** library is an early-stage, experimental library for interfacing with the [LineScale dynamometer](https://www.linegrip.com/linescale-3/) from **LineGrip Corp.** It is built for **ESP32** using the **Arduino** framework.. This is my first attempt at coding a library and I am using AI for code completion. Expect bugs, *strange* choices, incomplete documentation, sporadic updates at best, and major changes that break code.
 
 ### Features:
 - **BLE Communication**: Identifies and connects to LineScales using their Bluetooth serviceUUID or last 3 bytes of the MAC address which is engraved above the screen.
@@ -12,13 +12,8 @@ The **LineScale** library is an early-stage, experimental library for interfacin
 
 ### Limitations:
 - **Incomplete Command Set**: Not all LS3 functions are implemented yet.
-- **BLE**: No support for BLE pass. It must be **'0000'**. 
-- **Testing Required**: Further validation is necessary to ensure full compatibility with LS3.
-
-### Intended Use:
-This library is meant for developers experimenting with LS3 integration and those looking to extend its capabilities. Expect bugs, missing features, and breaking changes in future updates.
-
-
+- **BLE**: No support for BLE pass. It must be **'0000'**. No support for multiple lineScales. It finds and connects.
+  
 
 ## Table of Contents
 
@@ -153,7 +148,14 @@ Connect to a LineScale device, outputs data to an OLED on the default I2C pins, 
 Receives lineScale data ove ESPNOW and outputs to OLED.
 
 ## Future Plans
-Upcoming features and improvements.
+
+### Structural improvements 
+- fafdj 
+-afdaafs
+
+### BLE
+- multi device support with selection, naming,
+-
 
 ## Acknowledgements
 Much thanks to Andy Reidrich for his contributions to the slackline world and enabling developments like this by releasing the command protocol. 
