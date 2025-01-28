@@ -53,7 +53,7 @@ The LineScale's responsiveness to commands depends on whether the screen is **lo
   - The LineScale does not transmit min or max measurements. The library tracks only the values it receives. This is done in kN, which will lead do some discrepancy from what is displayed on the screen if the unit is set to kgf or lbf. Resetting the min and max on the lineScale does not transmit anything over bluetooth, so the library has no way of knowing this has happened. Resetting min and max in the library can reset the min and max on the lineScale *if* the screen is unlocked. 
 
 ## Documented Commands
-This section details the LS3 commands as documented in [LS3_command_table_&_port_protocol.pdf](LS3_command_table_&_port_protocol.pdf).
+[LS3_command_table_&_port_protocol.pdf](LS3_command_table_&_port_protocol.pdf).
 
 
 | Command | HEX | Observed Functionality | Implemented in Library |
