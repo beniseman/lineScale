@@ -110,10 +110,9 @@ Functions in previous section are not repeated here.
 
 ### Structural improvements / known bugs
 - get rid of extra stuff in the loop, to a coherent handleConnection or similar (I have tried and its causing bluetooth problems)
-- 
 
 ### BLE
-- multi device support with selection, naming...
+- multi device support with selection when connecting, naming devices
 
 ### ESPNOW
 - ability to choose between or simultaneously display info from multiple data streams
