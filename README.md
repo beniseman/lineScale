@@ -114,6 +114,9 @@ Functions in previous section are not repeated here.
 ### BLE
 - multi device support with selection when connecting, naming devices
 
+### USB UART
+- add support for wired connection
+ 
 ### ESPNOW
 - ability to choose between or simultaneously display info from multiple data streams
 
