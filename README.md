@@ -1,9 +1,8 @@
-# LineScale Library Documentation
+# LineScale Library v0.1.0 (Very Beta)
 
 ## Overview
-**LineScale Library v0.1.0 (Very Beta)**
 
-The **LineScale** library is an early-stage, experimental library for interfacing with the [LineScale dynamometer](https://www.linegrip.com/linescale-3/) from **LineGrip Corp.** It is built for **ESP32** using the Arduino framework, leveraging **Bluetooth Low Energy (BLE)** for communication. This is my first attempt at coding a library and I am using AI for code completion. Expect bugs, sporadic updates at best, and major changes that break code.
+The **LineScale** library is an early-stage, experimental library for interfacing with the [LineScale dynamometer](https://www.linegrip.com/linescale-3/) from **LineGrip Corp.** It is built for **ESP32** using the **Arduino** framework, and **Bluetooth Low Energy (BLE)** for communication. This is my first attempt at coding a library and I am using AI for code completion. Expect bugs, strange choices, sporadic updates at best, and major changes that break code.
 
 ### Features:
 - **BLE Communication**: Identifies and connects to LineScales using their Bluetooth serviceUUID or last 3 bytes of the MAC address which is engraved above the screen.
@@ -25,7 +24,7 @@ This library is meant for developers experimenting with LS3 integration and thos
 
 - [Understanding How the LineScale Works](#understanding-how-the-linescale-works)
 - [Documented Commands](#documented-commands)
-- [Functions in C++](#functions-in-c)
+- [Functions](#functions)
 - [Example - Cereal Box](#example---cereal-box)
 - [Example - LS3-BLE-ESPNOW](#example---ls3-ble-espnow)
 - [Example - ESPNOW-Receiver](#example---espnow-receiver)
@@ -61,19 +60,19 @@ The LineScale's responsiveness to commands depends on whether the screen is **lo
   - The LineScale does not transmit min or max measurements. The library tracks these values in kN, which will lead do some discrepancy from what is displayed on the screen if the unit is set to kgf or lbf. Resetting the min and max on the lineScale does not transmit anything over bluetooth, so the library has no way of knowing this has happened. Resetting min and max in the library can reset the min and max on the lineScale *if* the screen is unlocked. This requires setting **Absolute Zero** mode.  
 
 ## Documented Commands
-This section details the LS3 commands as documented by the manufacturer, including their hex values, observed functionality, and whether they are implemented in the library.
+This section details the LS3 commands as documented in [LS3_command_table_&_port_protocol.pdf](LS3_command_table_&_port_protocol.pdf), including their hex values, observed functionality, and whether they are implemented in the library.
 
-[Manufacturer Reference](LS3_command_table_&_port_protocol.pdf)
+
 
 | Command | HEX | Observed Functionality | Implemented in Library |
 |---------|-----|------------------------|-------------------------|
-| Power off | `4F 0D 0A 66` | Power button press | `powerOff()` |
-| Zero command | `5A 0D 0A 71` | Zero button press | `zero()` |
-| Unit switch to kN | `4E 0D 0A 65` | Set unit to kN | `setUnit("kN")` |
-| Unit switch to kgf | `47 0D 0A 5E` | Set unit to kgf | `setUnit("kgf")` |
-| Unit switch to lbf | `42 0D 0A 59` | Set unit to lbf | `setUnit("lbf")` |
-| Speed switch to SLOW (10Hz) | `53 0D 0A 6A` | Set sampling rate to 10Hz | `speedSlow` |
-| Speed switch to FAST (40Hz) | `46 0D 0A 5D` | Set sampling rate to 40Hz | `speedFast` |
+| Power off | `4F 0D 0A 66` | Power button press | `powerButton()` |
+| Zero command | `5A 0D 0A 71` | Zero button press | `zeroButton()` |
+| Unit switch to kN | `4E 0D 0A 65` | Set unit to kN | `switchToKN()` |
+| Unit switch to kgf | `47 0D 0A 5E` | Set unit to kgf | `switchToKGF()` |
+| Unit switch to lbf | `42 0D 0A 59` | Set unit to lbf | `switchToLBF()` |
+| Speed switch to SLOW (10Hz) | `53 0D 0A 6A` | Set sampling rate to 10Hz | `speedSlow()` |
+| Speed switch to FAST (40Hz) | `46 0D 0A 5D` | Set sampling rate to 40Hz | `speedFast()` |
 | Speed switch to 640Hz | `4D 0D 0A 64` |  | ❌ |
 | Speed switch to 1280Hz | `51 0D 0A 68` |  | ❌ |
 | Relative/Absolute zero mode switch | `4C 0D 0A 63` | Switch between relative and absolute modes | `toggleZeroMode()` |
@@ -87,17 +86,107 @@ This section details the LS3 commands as documented by the manufacturer, includi
 | Read x-th log entry | `52 3x 3y 0D 0A ??` |  | ❌ |
 | Read 100th log entry | `52 39 39 0D 0A DB` |  | ❌ |
 
-## Functions in C++
-List of available functions.
+## Functions
+### LineScale Library Function Documentation
+
+#### Command Functions
+Function in previous section are not included here.
+
+##### `void sendCommand(const String& command);`
+Sends a command string to the LineScale device. Can handle single commands `Z` or multiple commands `AZ`.
+
+#### Data Parsing and Retrieval
+
+##### `void parseData(const uint8_t* pData, size_t length);`
+Parses incoming BLE data packets from the LineScale.
+
+##### `void homeScreen();`
+Simulates pressing the power button repeatedly to exit menus and return to the home screen.
+
+##### `void resetMinMax();`
+Resets the stored minimum and maximum force values.
+
+##### `float convertToKN(float value, const char* unit);`
+Converts a given force value to kN from the specified unit.
+
+##### `char getWorkingMode() const;`
+Retrieves the current working mode (real-time, overload, or max capacity).
+
+##### `float getMeasuredValue() const;`
+Retrieves the current measured force value.
+
+##### `float getRelativeForce() const;`
+Retrieves the current relative force value.
+
+##### `char getZeroMode() const;`
+Retrieves the current zero mode (relative or absolute).
+
+##### `float getReferenceZero() const;`
+Retrieves the current reference zero value.
+
+##### `int getBatteryLevel() const;`
+Retrieves the current battery level percentage.
+
+##### `const char* getUnit() const;`
+Retrieves the current unit of measurement (kN, kgf, or lbf).
+
+##### `int getSpeed() const;`
+Retrieves the current measurement speed in Hz.
+
+##### `float getMaxMeasuredValue() const;`
+Retrieves the maximum recorded force value.
+
+##### `float getMinMeasuredValue() const;`
+Retrieves the minimum recorded force value.
+
+#### Timeout Handling
+
+##### `void checkNotifyTimeout(unsigned int timeoutSeconds);`
+Checks if there has been a timeout in receiving BLE notifications within the given timeout duration.
+
+
+
 
 ## Example - Cereal Box
-Example sketch details.
+This sketch is a serial monitor testing setup and a good place to start.
+
+- Reads incoming text and coverts to 4 byte HEX command to be sent to the lineScale.
+- Allows multiple commands in a single input (e.g., `"YZ"` sets absolute zero mode and resets max/min values).
+
+### Documented Commands
+
+| Command | Function |
+|---------|----------|
+| `A` | Start Data Stream |
+| `E` | Stop Data Stream |
+| ` ` | Start / Stop output to serial monitor |
+| `Q` | Reset Tracked Max/Min |
+| `H` | Navigate back to home screen |
+| `O` | Power Button |
+| `Z` | Zero Button |
+| `N` | Switch to kN |
+| `G` | Switch to kgf |
+| `B` | Switch to lbf |
+| `S` | Speed Slow (10Hz) |
+| `F` | Speed Fast (40Hz) |
+| `L` | Toggle Zero Mode |
+| `X` | Set Relative Zero Mode |
+| `Y` | Set Absolute Zero Mode |
+| `T` | Set Current Value as Zero |
+| `C` | Peak Clearing Operation |
+
+### Sketch Commands
+| Command | Function |
+|---------|----------|
+| `space` | Start / Stop output to serial monitor |
+| `Q` | Reset Tracked Max/Min [resetMinMax()](#functions) |
+| `H` | Navigate back to home screen [homeScreen()](#functions) |
 
 ## Example - LS3-BLE-ESPNOW
-Example sketch details.
+Connect to a LineScale device, outputs data to an OLED on the default I2C pins, and broadcasts over ESPNOW.  
 
 ## Example - ESPNOW-Receiver
-Example sketch details.
+Receives lineScale data ove ESPNOW and outputs to OLED.
 
 ## Future Plans
 Upcoming features and improvements.
@@ -107,6 +196,6 @@ Much thanks to Andy Reidrich for his contributions to the slackline world and en
 
 This library is based on [Central mode (client) BLE UART for ESP32](https://github.com/ThingEngineer/ESP32_BLE_client_uart/tree/master) by [Josh Campbell](https://github.com/ThingEngineer). I was relieved to find it, as none of the other BLE client sketches included in various libraries were able to interact with charcteristics without crashing.
 
-I also referenced [PyLS3](https://gitlab.com/bjri/pyls3) by [Björn Riske](https://gitlab.com/bjoernr) and [ESP-NOW Two-Way Communication Between ESP32 Boards](https://randomnerdtutorials.com/esp-now-two-way-communication-esp32/) by [Rui Santos](https://randomnerdtutorials.com)
+I also referenced [PyLS3](https://gitlab.com/bjri/pyls3) by [Björn Riske](https://gitlab.com/bjoernr) and [ESP-NOW Two-Way Communication Between ESP32 Boards](https://randomnerdtutorials.com/esp-now-two-way-communication-esp32/) by [Rui Santos](https://randomnerdtutorials.com).
 
 
