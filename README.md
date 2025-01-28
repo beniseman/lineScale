@@ -5,7 +5,7 @@
 The **LineScale** library is an early-stage, experimental library for interfacing with the [LineScale dynamometer](https://www.linegrip.com/linescale-3/) from **LineGrip Corp.** It is built for **ESP32** using the **Arduino IDE**. This is my first attempt at coding a library and I am using AI for code completion. Expect bugs, *strange* choices, incomplete documentation, sporadic updates at best, and major changes that break code.
 
 ### Features:
-- **BLE Communication**: Identifies and connects to LineScales using their Bluetooth serviceUUID or last 3 bytes of the MAC address which is engraved above the screen.
+- **BLE Communication**: Identifies and connects to LineScales using their Bluetooth serviceUUID or if specified the last 3 bytes of the MAC address (which is engraved above the screen).
 - **Command Execution**: Implements some of the documented commands, allows sending a sequence of commands, and testing others.
 - **Data Parsing**: Processes 20 byte data into variables.
 - **Min and Max tracking**: track min and max values across received packets.
