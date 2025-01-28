@@ -41,7 +41,7 @@ The LineScale's responsiveness to commands depends on whether the screen is **lo
   - Only **Request PC or Bluetooth online** and **Disconnect PC or Bluetooth online** commands will function.
 
 - **When navigating menus**:  
-  - Only the **Power off** and **Zero** commands will function. These mimic button presses. As there are no commands that mimic up or down button presses menu automation is not currently possible. This is probably for the best, as it would make it easier to accidentally edit the service menu.
+  - Only the **Power off** and **Zero** commands will function. These mimic button presses. As there are no commands that mimic up or down button presses menu automation is not currently possible. This is probably for the best, as it would make it easier to accidentally edit the service menu and risk bricking your device.
 
 - **Measurement screen**:
   - The lineScale will accept commands
@@ -50,14 +50,13 @@ The LineScale's responsiveness to commands depends on whether the screen is **lo
 
 #### **Lock Mode Behavior**:  
   - The screen **will not enter lock mode** while navigating menus. This prevents a **"Request PC or Bluetooth online command"** from working. I have added the function **"homeScreen()"** to deal with this situation.
-  - If left idle outside of menus, the device will eventually lock based on user settings.
+  - If left idle outside of menus, the device will lock based on user settings.
 
 #### **Min and Max**:
-  - The LineScale does not transmit min or max measurements. The library tracks these values in kN, which will lead do some discrepancy from what is displayed on the screen if the unit is set to kgf or lbf. Resetting the min and max on the lineScale does not transmit anything over bluetooth, so the library has no way of knowing this has happened. Resetting min and max in the library can reset the min and max on the lineScale *if* the screen is unlocked. This requires setting **Absolute Zero** mode.  
+  - The LineScale does not transmit min or max measurements. The library tracks only the values it receives. This is done in kN, which will lead do some discrepancy from what is displayed on the screen if the unit is set to kgf or lbf. Resetting the min and max on the lineScale does not transmit anything over bluetooth, so the library has no way of knowing this has happened. Resetting min and max in the library can reset the min and max on the lineScale *if* the screen is unlocked. 
 
 ## Documented Commands
 This section details the LS3 commands as documented in [LS3_command_table_&_port_protocol.pdf](LS3_command_table_&_port_protocol.pdf).
-
 
 
 | Command | HEX | Observed Functionality | Implemented in Library |
