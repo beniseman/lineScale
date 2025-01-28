@@ -102,9 +102,9 @@ Functions in previous section are not repeated here.
 
 ## Example Sketches
 
-- [Serial Stream](examples/serialPlayground/README.md) - Serial output testing playground.
+- [LS3-BLE-Serial](examples/serialPlayground/README.md) - Serial output testing playground.
 - [LS3-BLE-ESPNOW](examples/LS3-BLE-ESPNOW/README.md) - Outputs data to an OLED and broadcasts over ESPNOW.  
-- [ESP-NOW Sender](examples/ESPNOW_Sender/README.md) - Receives data over ESPNOW and outputs to an OLED. 
+- [ESPNOW-Receiver](examples/ESPNOW_Sender/README.md) - Receives data over ESPNOW and outputs to an OLED. 
 
 ## Future Plans
 
