@@ -2,7 +2,7 @@
 
 ## Overview
 
-The **LineScale** library is an early-stage, experimental library for interfacing with the [LineScale dynamometer](https://www.linegrip.com/linescale-3/) from **LineGrip Corp.** It is built for **ESP32** using the **Arduino** framework.. This is my first attempt at coding a library and I am using AI for code completion. Expect bugs, *strange* choices, incomplete documentation, sporadic updates at best, and major changes that break code.
+The **LineScale** library is an early-stage, experimental library for interfacing with the [LineScale dynamometer](https://www.linegrip.com/linescale-3/) from **LineGrip Corp.** It is built for **ESP32** using the **Arduino IDE**. This is my first attempt at coding a library and I am using AI for code completion. Expect bugs, *strange* choices, incomplete documentation, sporadic updates at best, and major changes that break code.
 
 ### Features:
 - **BLE Communication**: Identifies and connects to LineScales using their Bluetooth serviceUUID or last 3 bytes of the MAC address which is engraved above the screen.
@@ -21,9 +21,6 @@ The **LineScale** library is an early-stage, experimental library for interfacin
 - [Documented Commands](#documented-commands)
 - [Functions](#functions)
 - [Example Sketches](#example-sketches)
-- [Example - Cereal Box](#example---cereal-box)
-- [Example - LS3-BLE-ESPNOW](#example---ls3-ble-espnow)
-- [Example - ESPNOW-Receiver](#example---espnow-receiver)
 - [Future Plans](#future-plans)
 - [Acknowledgements](#acknowledgements)
 
@@ -74,7 +71,7 @@ This section details the LS3 commands as documented in [LS3_command_table_&_port
 | Switch to relative zero mode | `58 0D 0A 6F` | Set relative zero mode | `setRelativeZeroMode()` |
 | Switch to absolute zero mode | `59 0D 0A 70` | Set absolute zero mode | `setAbsoluteZeroMode()` |
 | Set current value as absolute zero | `54 0D 0A 6B` | Set current value as absolute zero or reference zero | `setAbsoluteZero()` |
-| Peak clearing operation | `43 0D 0A 5A` | none ? | `clearPeak()` |
+| Peak clearing operation | `43 0D 0A 5A` | ❌ none? | `clearPeak()` |
 | Request PC or Bluetooth online command | `41 0D 0A 58` | Start data stream (Bluetooth icon will be highlighted) | `startDataStream()` |
 | Disconnect PC or Bluetooth online command | `45 0D 0A 5C` | Stop data stream | `stopDataStream()` |
 | Read first log entry | `52 30 30 0D 0A C9` |  | ❌ |
@@ -86,7 +83,7 @@ Functions in previous section are not repeated here.
 
 | Command | Description |
 |---------|-------------|
-| `void sendCommand(const String& command);` | Sends a command string to the LineScale device. Can handle single commands `Z` or multiple commands `AZ`. |
+| `void sendCommand(const String& command);` | Converts string to 4 byte HEX command(s) to be sent to the lineScale (e.g., `A` + `\r+\n+crc` converts to `41 0D 0A 58`). Can handle single commands `Z` or multiple commands `AZ`. |
 | `void parseData(const uint8_t* pData, size_t length);` | Parses incoming BLE data packets from the LineScale. |
 | `void homeScreen();` | Simulates pressing the power button repeatedly to exit menus and return to the home screen. Also sends `startDataStream()` |
 | `void resetMinMax();` | Resets the stored minimum and maximum force values. Sends `setAbsoluteZeroMode()` and `zeroButton()` |
@@ -105,26 +102,24 @@ Functions in previous section are not repeated here.
 
 ## Example Sketches
 
-- [Serial Stream](examples/serialPlayground/README.md)
-- [Command Test](examples/Command_Test/README.md)
-- [ESP-NOW Sender](examples/ESPNOW_Sender/README.md)
-- [ESP-NOW Receiver](examples/ESPNOW_Receiver/README.md)
-
-## Example - LS3-BLE-ESPNOW
-Connect to a LineScale device, outputs data to an OLED on the default I2C pins, and broadcasts over ESPNOW.  
-
-## Example - ESPNOW-Receiver
-Receives lineScale data ove ESPNOW and outputs to OLED.
+- [Serial Stream](examples/serialPlayground/README.md) - Serial output testing playground.
+- [LS3-BLE-ESPNOW](examples/LS3-BLE-ESPNOW/README.md) - Outputs data to an OLED and broadcasts over ESPNOW.  
+- [ESP-NOW Sender](examples/ESPNOW_Sender/README.md) - Receives data over ESPNOW and outputs to an OLED. 
 
 ## Future Plans
 
-### Structural improvements 
-- fafdj 
--afdaafs
+### Structural improvements / known bugs
+- get rid of extra stuff in the loop, to a coherent handleConnection or similar (I have tried and its causing bluetooth problems)
+- 
 
 ### BLE
-- multi device support with selection, naming,
--
+- multi device support with selection, naming...
+
+### ESPNOW
+- ability to choose between or simultaneously display info from multiple data streams
+
+### LORA
+- add support for LORA modules to further extend range
 
 ## Acknowledgements
 Much thanks to Andy Reidrich for his contributions to the slackline world and for enabling developments like this by releasing the lineScale command protocol. 
