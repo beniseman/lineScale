@@ -40,13 +40,18 @@ This library is meant for developers experimenting with LS3 integration and thos
 After connecting to the LineScale via Bluetooth, the **"Request PC or Bluetooth online command"** must be sent to begin receiving data. Without this command, the device will remain idle and will not transmit measurements.
 
 #### **Command Behavior Based on Screen State**
-The LineScale's responsiveness to commands depends on whether the screen is **locked**, **unlocked**, or **actively navigating menus**:
+The LineScale's responsiveness to commands depends on whether the screen is **locked**, **actively navigating menus**, or **on the measurement screen**:
 
 - **When the screen is locked**:  
   - Only **Request PC or Bluetooth online** and **Disconnect PC or Bluetooth online** commands will function.
 
 - **When navigating menus**:  
   - Only the **Power off** and **Zero** commands will function. These mimic button presses. As there are no commands that mimic up or down button presses menu automation is not currently possible. This is probably for the best, as it would make it easier to accidentally edit the service menu.
+
+- **Measurement screen**:
+  - The lineScale will accept commands
+  - Functionality may be context dependent, as with the Zero command. In Absolute Zero mode this resets the min and max. In Relative Zero mode this sets a reference zero.  
+
 
 #### **Lock Mode Behavior**:  
   - The screen **will not enter lock mode** while navigating menus. This prevents a **"Request PC or Bluetooth online command"** from working. I have added the function **"homeScreen()"** to deal with this situation.
