@@ -2,7 +2,7 @@
 
 ## Overview
 
-The **LineScale** library is an early-stage, experimental library for interfacing with the [LineScale dynamometer](https://www.linegrip.com/linescale-3/) from **LineGrip Corp.** It is built for **ESP32** using the **Arduino** framework, and **Bluetooth Low Energy (BLE)** for communication. This is my first attempt at coding a library and I am using AI for code completion. Expect bugs, strange choices, sporadic updates at best, and major changes that break code.
+The **LineScale** library is an early-stage, experimental library for interfacing with the [LineScale dynamometer](https://www.linegrip.com/linescale-3/) from **LineGrip Corp.** It is built for **ESP32** using the **Arduino** framework, and **Bluetooth Low Energy (BLE)** for communication. This is my first attempt at coding a library and I am using AI for code completion. Expect bugs, strange choices, incomplete documentation, sporadic updates at best, and major changes that break code.
 
 ### Features:
 - **BLE Communication**: Identifies and connects to LineScales using their Bluetooth serviceUUID or last 3 bytes of the MAC address which is engraved above the screen.
@@ -60,7 +60,7 @@ The LineScale's responsiveness to commands depends on whether the screen is **lo
   - The LineScale does not transmit min or max measurements. The library tracks these values in kN, which will lead do some discrepancy from what is displayed on the screen if the unit is set to kgf or lbf. Resetting the min and max on the lineScale does not transmit anything over bluetooth, so the library has no way of knowing this has happened. Resetting min and max in the library can reset the min and max on the lineScale *if* the screen is unlocked. This requires setting **Absolute Zero** mode.  
 
 ## Documented Commands
-This section details the LS3 commands as documented in [LS3_command_table_&_port_protocol.pdf](LS3_command_table_&_port_protocol.pdf), including their hex values, observed functionality, and whether they are implemented in the library.
+This section details the LS3 commands as documented in [LS3_command_table_&_port_protocol.pdf](LS3_command_table_&_port_protocol.pdf).
 
 
 
@@ -87,71 +87,35 @@ This section details the LS3 commands as documented in [LS3_command_table_&_port
 | Read 100th log entry | `52 39 39 0D 0A DB` |  | ❌ |
 
 ## Functions
-### LineScale Library Function Documentation
+Functions in previous section are not repeated here.
 
-#### Command Functions
-Function in previous section are not included here.
-
-##### `void sendCommand(const String& command);`
-Sends a command string to the LineScale device. Can handle single commands `Z` or multiple commands `AZ`.
-
-#### Data Parsing and Retrieval
-
-##### `void parseData(const uint8_t* pData, size_t length);`
-Parses incoming BLE data packets from the LineScale.
-
-##### `void homeScreen();`
-Simulates pressing the power button repeatedly to exit menus and return to the home screen.
-
-##### `void resetMinMax();`
-Resets the stored minimum and maximum force values.
-
-##### `float convertToKN(float value, const char* unit);`
-Converts a given force value to kN from the specified unit.
-
-##### `char getWorkingMode() const;`
-Retrieves the current working mode (real-time, overload, or max capacity).
-
-##### `float getMeasuredValue() const;`
-Retrieves the current measured force value.
-
-##### `float getRelativeForce() const;`
-Retrieves the current relative force value.
-
-##### `char getZeroMode() const;`
-Retrieves the current zero mode (relative or absolute).
-
-##### `float getReferenceZero() const;`
-Retrieves the current reference zero value.
-
-##### `int getBatteryLevel() const;`
-Retrieves the current battery level percentage.
-
-##### `const char* getUnit() const;`
-Retrieves the current unit of measurement (kN, kgf, or lbf).
-
-##### `int getSpeed() const;`
-Retrieves the current measurement speed in Hz.
-
-##### `float getMaxMeasuredValue() const;`
-Retrieves the maximum recorded force value.
-
-##### `float getMinMeasuredValue() const;`
-Retrieves the minimum recorded force value.
-
-#### Timeout Handling
-
-##### `void checkNotifyTimeout(unsigned int timeoutSeconds);`
-Checks if there has been a timeout in receiving BLE notifications within the given timeout duration.
+| Command | Description |
+|---------|-------------|
+| `void sendCommand(const String& command);` | Sends a command string to the LineScale device. Can handle single commands `Z` or multiple commands `AZ`. |
+| `void parseData(const uint8_t* pData, size_t length);` | Parses incoming BLE data packets from the LineScale. |
+| `void homeScreen();` | Simulates pressing the power button repeatedly to exit menus and return to the home screen. Also sends `startDataStream()` |
+| `void resetMinMax();` | Resets the stored minimum and maximum force values. Sends `setAbsoluteZeroMode()` and `zeroButton()` |
+| `float convertToKN(float value, const char* unit);` | Converts a given force value to kN from the specified unit. |
+| `char getWorkingMode() const;` | Retrieves the current working mode (real-time, overload, or max capacity). |
+| `float getMeasuredValue() const;` | Retrieves the current measured force value. |
+| `float getRelativeForce() const;` | Retrieves the current relative force value. |
+| `char getZeroMode() const;` | Retrieves the current zero mode (relative or absolute). |
+| `float getReferenceZero() const;` | Retrieves the current reference zero value. |
+| `int getBatteryLevel() const;` | Retrieves the current battery level percentage. |
+| `const char* getUnit() const;` | Retrieves the current unit of measurement (kN, kgf, or lbf). |
+| `int getSpeed() const;` | Retrieves the current sample rate in Hz. |
+| `float getMaxMeasuredValue() const;` | Retrieves the maximum recorded force value. |
+| `float getMinMeasuredValue() const;` | Retrieves the minimum recorded force value. |
+| `void checkNotifyTimeout(unsigned int timeoutSeconds);` | Checks if there has been a timeout in receiving BLE notifications within the given timeout duration. |
 
 
-
-
-## Example - Cereal Box
+## Example - Cereal Box.ino
 This sketch is a serial monitor testing setup and a good place to start.
 
-- Reads incoming text and coverts to 4 byte HEX command to be sent to the lineScale.
-- Allows multiple commands in a single input (e.g., `"YZ"` sets absolute zero mode and resets max/min values).
+- Reads incoming text and converts to 4 byte HEX command to be sent to the lineScale
+  - (e.g., `A` + `\r+\n+crc` converts to `41 0D 0A 58`)
+- Allows multiple commands in a single input
+  - (e.g., `"YZ"` sets absolute zero mode and resets max/min values).
 
 ### Documented Commands
 
@@ -179,8 +143,8 @@ This sketch is a serial monitor testing setup and a good place to start.
 | Command | Function |
 |---------|----------|
 | `space` | Start / Stop output to serial monitor |
-| `Q` | Reset Tracked Max/Min [resetMinMax()](#functions) |
-| `H` | Navigate back to home screen [homeScreen()](#functions) |
+| `Q` | Reset Tracked Max/Min via [resetMinMax()](#functions) |
+| `H` | Navigate back to home screen via [homeScreen()](#functions) |
 
 ## Example - LS3-BLE-ESPNOW
 Connect to a LineScale device, outputs data to an OLED on the default I2C pins, and broadcasts over ESPNOW.  
