@@ -3,15 +3,15 @@
 ## Overview
 **LineScale Library v0.1.0 (Very Beta)**
 
-The **LineScale** library is an early-stage, experimental library for interfacing with the [LineScale dynamometer](https://www.linegrip.com/linescale-3/) from **LineGrip Corp.** It is built for **ESP32** using the Arduino framework, leveraging **Bluetooth Low Energy (BLE)** for communication. 
+The **LineScale** library is an early-stage, experimental library for interfacing with the [LineScale dynamometer](https://www.linegrip.com/linescale-3/) from **LineGrip Corp.** It is built for **ESP32** using the Arduino framework, leveraging **Bluetooth Low Energy (BLE)** for communication. This is my first attempt at coding a library and I am using AI for code completion. Expect bugs, sporadic updates at best, and major changes that break code.
 
 ### Features:
-- **BLE Communication**: Identifies LineScales using their Bluetooth serviceUUID Connects to the LS2/3 device via Bluetooth Low Energy (BLE).
-- **Command Execution**: Implements various LS3 commands for unit switching, zeroing, data streaming, and more.
+- **BLE Communication**: Identifies and connects to LineScales using their Bluetooth serviceUUID or last 3 bytes of the MAC address which is engraved above the screen.
+- **Command Execution**: Implements some of the documented commands, allows sending a sequence of commands, and testing.
 - **Data Parsing**: Processes force readings, battery status, and measurement units.
-- **Min and Max tracking**: Processes force readings, battery status, and measurement units.
+- **Min and Max tracking**: track min and max values across received packets.
 
-
+f
 
 ### Limitations:
 - **Incomplete Command Set**: Not all LS3 functions are implemented yet.
