@@ -1,15 +1,17 @@
-## 1. Overview
+# LineScale Library Documentation
 
+## Overview
 **LineScale Library v0.1.0 (Very Beta)**
 
-The **LineScale** library is an early-stage, experimental library designed to interface with the LineScale dynamometer from LineGrip corp. It provides a structured way to send commands and parse responses.
-
-This library is in **version 0.1.0**, meaning it is highly experimental and subject to significant changes. Some functionality may not be fully tested or implemented.
+The **LineScale** library is an early-stage, experimental library for interfacing with the [LineScale dynamometer](https://www.linegrip.com/linescale-3/) from **LineGrip Corp.** It is built for **ESP32** using the Arduino framework, leveraging **Bluetooth Low Energy (BLE)** for communication. 
 
 ### Features:
-- **BLE Communication**: Connects to the LS3 device via Bluetooth Low Energy (BLE).
+- **BLE Communication**: Identifies LineScales using their Bluetooth serviceUUID Connects to the LS2/3 device via Bluetooth Low Energy (BLE).
 - **Command Execution**: Implements various LS3 commands for unit switching, zeroing, data streaming, and more.
 - **Data Parsing**: Processes force readings, battery status, and measurement units.
+- **Min and Max tracking**: Processes force readings, battery status, and measurement units.
+
+
 
 ### Limitations:
 - **Incomplete Command Set**: Not all LS3 functions are implemented yet.
@@ -19,8 +21,23 @@ This library is in **version 0.1.0**, meaning it is highly experimental and subj
 ### Intended Use:
 This library is meant for developers experimenting with LS3 integration and those looking to extend its capabilities. Expect bugs, missing features, and breaking changes in future updates.
 
-## 2. Documented Commands
 
+## Table of Contents
+
+- [Understanding How the LineScale Works](#understanding-how-the-linescale-works)
+- [Documented Commands](#documented-commands)
+- [Functions in C++](#functions-in-c)
+- [Example - Cereal Box](#example---cereal-box)
+- [Example - LS3-BLE-ESPNOW](#example---ls3-ble-espnow)
+- [Example - ESPNOW-Receiver](#example---espnow-receiver)
+- [Future Plans](#future-plans)
+
+
+
+## Understanding How the LineScale Works
+(Details on device operation.)
+
+## Documented Commands
 This section details the LS3 commands as documented by the manufacturer, including their hex values, observed functionality, and whether they are implemented in the library.
 
 [Manufacturer Reference](LS3_command_table_&_port_protocol.pdf)
@@ -46,3 +63,19 @@ This section details the LS3 commands as documented by the manufacturer, includi
 | Read first log entry | `52 30 30 0D 0A C9` |  | ❌ |
 | Read x-th log entry | `52 3x 3y 0D 0A ??` |  | ❌ |
 | Read 100th log entry | `52 39 39 0D 0A DB` |  | ❌ |
+
+## Functions in C++
+List of available functions.
+
+## Example - Cereal Box
+Example sketch details.
+
+## Example - LS3-BLE-ESPNOW
+Example sketch details.
+
+## Example - ESPNOW-Receiver
+Example sketch details.
+
+## Future Plans
+Upcoming features and improvements.
+
