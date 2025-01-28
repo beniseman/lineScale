@@ -12,7 +12,6 @@ This sketch is a serial monitor testing setup and a good place to start.
 |---------|----------|
 | `A` | Start Data Stream |
 | `E` | Stop Data Stream |
-| ` ` | Start / Stop output to serial monitor |
 | `Q` | Reset Tracked Max/Min |
 | `H` | Navigate back to home screen |
 | `O` | Power Button |
