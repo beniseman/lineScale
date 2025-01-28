@@ -7,19 +7,18 @@ The **LineScale** library is an early-stage, experimental library for interfacin
 
 ### Features:
 - **BLE Communication**: Identifies and connects to LineScales using their Bluetooth serviceUUID or last 3 bytes of the MAC address which is engraved above the screen.
-- **Command Execution**: Implements some of the documented commands, allows sending a sequence of commands, and testing.
-- **Data Parsing**: Processes force readings, battery status, and measurement units.
+- **Command Execution**: Implements some of the documented commands, allows sending a sequence of commands, and testing others.
+- **Data Parsing**: Processes 20 byte data into variables.
 - **Min and Max tracking**: track min and max values across received packets.
-
-f
 
 ### Limitations:
 - **Incomplete Command Set**: Not all LS3 functions are implemented yet.
-- **BLE Connectivity**: Stability improvements may be needed.
+- **BLE**: No support for BLE pass. It must be **'0000'**. 
 - **Testing Required**: Further validation is necessary to ensure full compatibility with LS3.
 
 ### Intended Use:
 This library is meant for developers experimenting with LS3 integration and those looking to extend its capabilities. Expect bugs, missing features, and breaking changes in future updates.
+
 
 
 ## Table of Contents
@@ -31,11 +30,30 @@ This library is meant for developers experimenting with LS3 integration and thos
 - [Example - LS3-BLE-ESPNOW](#example---ls3-ble-espnow)
 - [Example - ESPNOW-Receiver](#example---espnow-receiver)
 - [Future Plans](#future-plans)
+- [Acknowledgements](#acknowledgements)
 
 
 
 ## Understanding How the LineScale Works
-(Details on device operation.)
+
+#### **Data Stream**
+After connecting to the LineScale via Bluetooth, the **"Request PC or Bluetooth online command"** must be sent to begin receiving data. Without this command, the device will remain idle and will not transmit measurements.
+
+#### **Command Behavior Based on Screen State**
+The LineScale's responsiveness to commands depends on whether the screen is **locked**, **unlocked**, or **actively navigating menus**:
+
+- **When the screen is locked**:  
+  - Only **Request PC or Bluetooth online** and **Disconnect PC or Bluetooth online** commands will function.
+
+- **When navigating menus**:  
+  - Only the **Power off** and **Zero** commands will function. These mimic button presses. As there are no commands that mimic up or down button presses menu automation is not currently possible. This is probably for the best, as it would make it easier to accidentally edit the service menu.
+
+#### **Lock Mode Behavior**:  
+  - The screen **will not enter lock mode** while navigating menus. This prevents a **"Request PC or Bluetooth online command"** from working. I have added the function **"homeScreen()"** to deal with this situation.
+  - If left idle outside of menus, the device will eventually lock based on user settings.
+
+#### **Min and Max**:
+  - The LineScale does not transmit min or max measurements. The library tracks these values in kN, which will lead do some discrepancy from what is displayed on the screen if the unit is set to kgf or lbf. Resetting the min and max on the lineScale does not transmit anything over bluetooth, so the library has no way of knowing this has happened. Resetting min and max in the library can reset the min and max on the lineScale *if* the screen is unlocked. This requires setting **Absolute Zero** mode.  
 
 ## Documented Commands
 This section details the LS3 commands as documented by the manufacturer, including their hex values, observed functionality, and whether they are implemented in the library.
@@ -78,4 +96,12 @@ Example sketch details.
 
 ## Future Plans
 Upcoming features and improvements.
+
+## Acknowledgements
+Much thanks to Andy Reidrich for his contributions to the slackline world and enabling developments like this by releasing the command protocol. 
+
+This library is based on [Central mode (client) BLE UART for ESP32](https://github.com/ThingEngineer/ESP32_BLE_client_uart/tree/master) by [Josh Campbell](https://github.com/ThingEngineer). I was relieved to find it, as none of the other BLE client sketches included in various libraries were able to interact with charcteristics without crashing.
+
+I also referenced [PyLS3](https://gitlab.com/bjri/pyls3) by [Björn Riske](https://gitlab.com/bjoernr) and [ESP-NOW Two-Way Communication Between ESP32 Boards](https://randomnerdtutorials.com/esp-now-two-way-communication-esp32/) by [Rui Santos](https://randomnerdtutorials.com)
+
 
