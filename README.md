@@ -20,6 +20,7 @@ The **LineScale** library is an early-stage, experimental library for interfacin
 - [Understanding How the LineScale Works](#understanding-how-the-linescale-works)
 - [Documented Commands](#documented-commands)
 - [Functions](#functions)
+- [Example Sketches](#example-sketches)
 - [Example - Cereal Box](#example---cereal-box)
 - [Example - LS3-BLE-ESPNOW](#example---ls3-ble-espnow)
 - [Example - ESPNOW-Receiver](#example---espnow-receiver)
@@ -103,8 +104,14 @@ Functions in previous section are not repeated here.
 | `float getMinMeasuredValue() const;` | Retrieves the minimum recorded force value. |
 | `void checkNotifyTimeout(unsigned int timeoutSeconds);` | Checks if there has been a timeout in receiving BLE notifications within the given timeout duration. |
 
+## Example Sketches
 
-## Example - Cereal Box.ino
+- [Serial Stream](examples/Serial_Stream/README.md)
+- [Command Test](examples/Command_Test/README.md)
+- [ESP-NOW Sender](examples/ESPNOW_Sender/README.md)
+- [ESP-NOW Receiver](examples/ESPNOW_Receiver/README.md)
+
+## Example - Cereal Box
 This sketch is a serial monitor testing setup and a good place to start.
 
 - Reads incoming text and converts to 4 byte HEX command to be sent to the lineScale
@@ -158,7 +165,7 @@ Receives lineScale data ove ESPNOW and outputs to OLED.
 -
 
 ## Acknowledgements
-Much thanks to Andy Reidrich for his contributions to the slackline world and enabling developments like this by releasing the command protocol. 
+Much thanks to Andy Reidrich for his contributions to the slackline world and for enabling developments like this by releasing the lineScale command protocol. 
 
 This library is based on [Central mode (client) BLE UART for ESP32](https://github.com/ThingEngineer/ESP32_BLE_client_uart/tree/master) by [Josh Campbell](https://github.com/ThingEngineer). I was relieved to find it, as none of the other BLE client sketches included in various libraries were able to interact with charcteristics without crashing.
 
