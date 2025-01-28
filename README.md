@@ -110,6 +110,8 @@ Functions in previous section are not repeated here.
 
 ### Structural improvements / known bugs
 - get rid of extra stuff in the loop, to a coherent handleConnection or similar (I have tried and its causing bluetooth problems)
+- 20 byte length flag before processing data appears to not work all of the time
+- ...
 
 ### BLE
 - multi device support with selection when connecting, naming devices
