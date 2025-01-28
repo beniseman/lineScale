@@ -31,5 +31,5 @@ This sketch is a serial monitor testing setup and a good place to start.
 | Command | Function |
 |---------|----------|
 | `space` | Start / Stop output to serial monitor |
-| `Q` | Reset Tracked Max/Min via [resetMinMax()](#functions) |
-| `H` | Navigate back to home screen via [homeScreen()](#functions) |
+| `Q` | Reset Tracked Max/Min via `resetMinMax()` |
+| `H` | Navigate back to home screen via `homeScreen()` |
