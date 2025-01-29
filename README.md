@@ -29,7 +29,7 @@ The **LineScale** library is an early-stage, experimental library for interfacin
 ## Understanding How the LineScale Works
 
 #### **Data Stream**
-After connecting to the LineScale via Bluetooth, the **"Request PC or Bluetooth online command"** must be sent to begin receiving data. Without this command, the device will remain idle and will not transmit measurements.
+After connecting to the LineScale via Bluetooth, the **"Request PC or Bluetooth online command"** must be sent to begin receiving data. Without this command, the device will remain idle and will not transmit measurements. I have opted to send this by default (for now).
 
 #### **Command Behavior Based on Screen State**
 The LineScale's responsiveness to commands depends on whether the screen is **locked**, **actively navigating menus**, or **on the measurement screen**:
@@ -46,7 +46,7 @@ The LineScale's responsiveness to commands depends on whether the screen is **lo
 
 
 #### **Lock Mode Behavior**:  
-  - The screen **will not enter lock mode** while navigating menus. This prevents a **"Request PC or Bluetooth online command"** from working. I have added the function **"homeScreen()"** to deal with this situation.
+  - The screen **will not enter lock mode** while navigating menus. This prevents a **"Request PC or Bluetooth online command"** from working. `fff`
   - If left idle outside of menus, the device will lock based on user settings.
 
 #### **Min and Max**:
