@@ -60,18 +60,18 @@ The LineScale's responsiveness to commands depends on whether the screen is **lo
 |---------|-----|------------------------|-------------------------|
 | Power off | `4F 0D 0A 66` | Power button press | `powerButton()` |
 | Zero command | `5A 0D 0A 71` | Zero button press | `zeroButton()` |
-| Unit switch to kN | `4E 0D 0A 65` | Set unit to kN | `switchToKN()` |
-| Unit switch to kgf | `47 0D 0A 5E` | Set unit to kgf | `switchToKGF()` |
-| Unit switch to lbf | `42 0D 0A 59` | Set unit to lbf | `switchToLBF()` |
-| Speed switch to SLOW (10Hz) | `53 0D 0A 6A` | Set sampling rate to 10Hz | `speedSlow()` |
-| Speed switch to FAST (40Hz) | `46 0D 0A 5D` | Set sampling rate to 40Hz | `speedFast()` |
+| Unit switch to kN | `4E 0D 0A 65` | Set unit to kN | `setUnitKN()` |
+| Unit switch to kgf | `47 0D 0A 5E` | Set unit to kgf | `setUnitKGF()` |
+| Unit switch to lbf | `42 0D 0A 59` | Set unit to lbf | `setUnitLBF()` |
+| Speed switch to SLOW (10Hz) | `53 0D 0A 6A` | Set sampling rate to 10Hz | `setScanRate(10)` |
+| Speed switch to FAST (40Hz) | `46 0D 0A 5D` | Set sampling rate to 40Hz | `setScanRate(40)` |
 | Speed switch to 640Hz | `4D 0D 0A 64` |  | ❌ |
 | Speed switch to 1280Hz | `51 0D 0A 68` |  | ❌ |
-| Relative/Absolute zero mode switch | `4C 0D 0A 63` | Switch between relative and absolute modes | `toggleZeroMode()` |
+| Relative/Absolute zero mode switch | `4C 0D 0A 63` | Switch between relative and absolute modes | ❌ |
 | Switch to relative zero mode | `58 0D 0A 6F` | Set relative zero mode | `setRelativeZeroMode()` |
 | Switch to absolute zero mode | `59 0D 0A 70` | Set absolute zero mode | `setAbsoluteZeroMode()` |
 | Set current value as absolute zero | `54 0D 0A 6B` | Set current value as absolute zero or reference zero | `setAbsoluteZero()` |
-| Peak clearing operation | `43 0D 0A 5A` | ❌ none? | `clearPeak()` |
+| Peak clearing operation | `43 0D 0A 5A` | ❌ none? | ❌ |
 | Request PC or Bluetooth online command | `41 0D 0A 58` | Start data stream (Bluetooth icon will be highlighted) and sets Scan Rate to 40Hz | `startDataStream()` |
 | Disconnect PC or Bluetooth online command | `45 0D 0A 5C` | Stop data stream | `stopDataStream()` |
 | Read first log entry | `52 30 30 0D 0A C9` |  | ❌ |
