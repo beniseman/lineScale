@@ -72,7 +72,7 @@ The LineScale's responsiveness to commands depends on whether the screen is **lo
 | Switch to absolute zero mode | `59 0D 0A 70` | Set absolute zero mode | `setAbsoluteZeroMode()` |
 | Set current value as absolute zero | `54 0D 0A 6B` | Set current value as absolute zero or reference zero | `setAbsoluteZero()` |
 | Peak clearing operation | `43 0D 0A 5A` | ❌ none? | `clearPeak()` |
-| Request PC or Bluetooth online command | `41 0D 0A 58` | Start data stream (Bluetooth icon will be highlighted) | `startDataStream()` |
+| Request PC or Bluetooth online command | `41 0D 0A 58` | Start data stream (Bluetooth icon will be highlighted) and sets Scan Rate to 40Hz | `startDataStream()` |
 | Disconnect PC or Bluetooth online command | `45 0D 0A 5C` | Stop data stream | `stopDataStream()` |
 | Read first log entry | `52 30 30 0D 0A C9` |  | ❌ |
 | Read x-th log entry | `52 3x 3y 0D 0A ??` |  | ❌ |
