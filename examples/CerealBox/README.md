@@ -12,8 +12,6 @@ This is a serial playground for testing communication and lineScale functionalit
 |---------|----------|
 | `A` | Start Data Stream |
 | `E` | Stop Data Stream |
-| `Q` | Reset Tracked Max/Min |
-| `H` | Navigate back to home screen |
 | `O` | Power Button |
 | `Z` | Zero Button |
 | `N` | Switch to kN |
