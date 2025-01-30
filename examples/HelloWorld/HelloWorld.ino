@@ -1,4 +1,3 @@
-
 #include "LineScale.h"
 
 LineScale* linescale;
@@ -58,3 +57,4 @@ void newMeasurementCallback() {
       linescale->NotificationRate() // Notifications per second
     );
 }
+
