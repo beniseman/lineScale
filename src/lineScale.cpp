@@ -1,4 +1,4 @@
-#include "LineScale.h"
+#include "lineScale.h"
 
 static BLEUUID serviceUUID("00001000-0000-1000-8000-00805f9b34fb");
 static BLEUUID charUUID_RX("00001001-0000-1000-8000-00805f9b34fb");
