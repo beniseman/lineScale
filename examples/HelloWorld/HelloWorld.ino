@@ -1,4 +1,5 @@
-#include "LineScale.h"
+
+#include <lineScale.h>
 
 LineScale* linescale;
 
