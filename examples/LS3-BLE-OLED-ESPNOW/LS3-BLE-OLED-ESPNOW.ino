@@ -268,7 +268,7 @@ void loop() {
     updateOLED(); // try putting this is in the callback and see what happens. 1-2 second lag even with flags!
   }
   processButton();
-  linescale->keepthebalance(10);  // Example function to check and maintain balance (customizable)
+  linescale->keepthebalance(10);  // same as handleTimeout
 }
 
 
