@@ -8,7 +8,7 @@ Button functionality (receiver):
   - hold (3 seconds) sleep the device
 
 ### Test Setup
-![](../examples/LS3-BLE-OLED_ESPNOW/esp32-breadboard.jpg)
+![](../LS3-BLE-OLED-ESPNOW/esp32-breadboard.jpg)
 
 ### Wiring diagram
 - Xiao ESP32S3
@@ -16,4 +16,4 @@ Button functionality (receiver):
 - 10kΩ resistor
 - button
   
-![Fritzing Part](xiao-oled-button.png)
+![Fritzing Part](../LS3-BLE-OLED-ESPNOW/xiao-oled-button.png)
