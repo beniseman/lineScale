@@ -108,7 +108,7 @@ The LineScale's responsiveness to commands depends on whether the screen is **lo
 ### lineScale documented commands
 | Type | Function | Description |
 |------|----------|------------|
-| `void` | `setScanRate(int speedValue);` | Set the scan rate (speed) for data acquisition. |
+| `void` | `setScanRate(int speedValue);` | Set the scan rate (speed) for data acquisition. Over BLE this works with 10 or 40. |
 | `void` | `setUnitKN();` | Set the force unit to kilonewtons (kN). |
 | `void` | `setUnitKGF();` | Set the force unit to kilogram-force (kgf). |
 | `void` | `setUnitLBF();` | Set the force unit to pound-force (lbf). |
