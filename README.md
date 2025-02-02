@@ -80,30 +80,65 @@ The LineScale's responsiveness to commands depends on whether the screen is **lo
 | Read 100th log entry | `52 39 39 0D 0A DB` |  | ❌ |
 
 ## Functions
-Functions in previous section are not repeated here.
 
-| Command | Description |
-|---------|-------------|
-| `void sendCommand(const String& command);` | Converts string to 4 byte HEX command(s) to be sent to the lineScale (e.g., `A` + `\r+\n+crc` converts to `41 0D 0A 58`). Can handle single commands `Z` or multiple commands `AZ`. |
-| `void parseData(const uint8_t* pData, size_t length);` | Parses incoming BLE data packets from the LineScale. |
-| `void homeScreen();` | Simulates pressing the power button repeatedly to exit menus and return to the home screen. Also sends `startDataStream()` |
-| `void resetMinMax();` | Resets the stored minimum and maximum force values. Sends `setAbsoluteZeroMode()` and `zeroButton()` |
-| `float convertToKN(float value, const char* unit);` | Converts a given force value to kN from the specified unit. |
-| `char getWorkingMode() const;` | Retrieves the current working mode (real-time, overload, or max capacity). |
-| `float getMeasuredValue() const;` | Retrieves the current measured force value. |
-| `float getRelativeForce() const;` | Retrieves the current relative force value. |
-| `char getZeroMode() const;` | Retrieves the current zero mode (relative or absolute). |
-| `float getReferenceZero() const;` | Retrieves the current reference zero value. |
-| `int getBatteryLevel() const;` | Retrieves the current battery level percentage. |
-| `const char* getUnit() const;` | Retrieves the current unit of measurement (kN, kgf, or lbf). |
-| `int getSpeed() const;` | Retrieves the current sample rate in Hz. |
-| `float getMaxMeasuredValue() const;` | Retrieves the maximum recorded force value. |
-| `float getMinMeasuredValue() const;` | Retrieves the minimum recorded force value. |
-| `void checkNotifyTimeout(unsigned int timeoutSeconds);` | Checks if there has been a timeout in receiving BLE notifications within the given timeout duration. |
+### Connectivity
+| Type | Function | Description |
+|------|----------|------------|
+| `void` | `setMAC(const std::string& mac);` | Set the MAC address for connecting to a specific LineScale device. When this is set connect() will exclusively choose this device. |
+| `bool` | `connect(const std::string& mac = "");` | Connect to the LineScale device. If no MAC is provided, it scans for available devices. |
+| `void` | `disconnect();` | Disconnect from the LineScale device. |
+| `void` | `handleTimeout(int timeoutSeconds=30);` | Manages timeout behavior when connection is lost or inactive due to being in the menus or if `startDataStream` needs to be re-sent. Must be in the loop. If you don't pass a timeout in seconds it will default to 30. Minimum accepted is 10. |
+| `std::string` | `getMAC() const;` | Retrieve the MAC address of the lineScale you are connected to. |
+| `bool` | `isConnected();` | Retruns connection status. |
+
+### Basic 
+| Type | Function | Description |
+|------|----------|------------|
+| `void` | `sendCommand(const std::string& command);` | Send a command to the LineScale device. |
+| `void` | `setDebug(bool enable);` | Enable or disable debugging output to the serial monitor. |
+
+
+### Callbacks
+| Type | Function | Description |
+|------|----------|------------|
+| `void` | `setDataCallback(LineScaleDataCallback callback);` | Set a callback function to handle incoming data from the LineScale. |
+| `void` | `setConnectionCallback(ConnectionCallback callback);` | Set a callback function to handle successful connection events. |
+| `void` | `setDisconnectionCallback(DisconnectionCallback callback);` | Set a callback function to handle disconnecction events. |
+
+### lineScale documented commands
+| Type | Function | Description |
+|------|----------|------------|
+| `void` | `setScanRate(int speedValue);` | Set the scan rate (speed) for data acquisition. |
+| `void` | `setUnitKN();` | Set the force unit to kilonewtons (kN). |
+| `void` | `setUnitKGF();` | Set the force unit to kilogram-force (kgf). |
+| `void` | `setUnitLBF();` | Set the force unit to pound-force (lbf). |
+| `void` | `powerButton();` | Simulate pressing the power button. |
+| `void` | `zeroButton();` | Simulate pressing the zero button. |
+| `void` | `setRelativeZeroMode();` | Set zero mode to relative zero. |
+| `void` | `setAbsoluteZeroMode();` | Set zero mode to absolute zero. |
+| `void` | `setAbsoluteZero();` | Set the absolute zero reference. |
+| `void` | `startDataStream();` | Start the data stream from the LineScale. |
+| `void` | `stopDataStream();` | Stop the data stream from the LineScale. |
+
+### Data retrieval
+| Type | Function | Description |
+|------|----------|------------|
+| `void` | `resetMaxMin();` | Reset the max and min force values stored by the library. *Attempt* to reset these values on the lineScale, but only works if the screen is unlocked. |
+| `int` | `NotificationRate();` | Get the last notification rate (notifications per second). |
+| `char` | `WorkingMode();` | Get the current working mode. |
+| `char` | `ZeroMode();` | Get the current zero mode. |
+| `float` | `Force();` | Get the current force value. |
+| `float` | `RelativeForce();` | Get the relative force value. |
+| `float` | `ReferenceZero();` | Get the reference zero value. |
+| `std::string` | `Unit();` | Get the current force unit. |
+| `int` | `ScanRate();` | Get the current scan rate (speed). |
+| `float` | `MaxForce();` | Get the maximum recorded force in the current unit. |
+| `float` | `MinForce();` | Get the minimum recorded force in the current unit. |
+| `int` | `BatteryLevel();` | Get the current battery level of the device. |
 
 ## Example Sketches
 
-- [HelloWorld](examples/HelloWorld/) -   
+- [HelloWorld](examples/HelloWorld/)!   
 - [LS3-BLE-Serial](examples/CerealBox/) - Serial output testing playground.
 - [LS3-BLE-ESPNOW](examples/LS3-BLE-OLED-ESPNOW/) - Outputs data to an OLED and broadcasts over ESPNOW.  
 - [ESPNOW-Receiver](examples/LS3-ESPNOW-OLED-Receiver/) - Receives data over ESPNOW and outputs to an OLED. 
@@ -111,9 +146,7 @@ Functions in previous section are not repeated here.
 ## Future Plans
 
 ### Structural improvements / known bugs
-- get rid of extra stuff in the loop, to a coherent handleConnection or similar (I have tried and its causing bluetooth problems)
-- 20 byte length flag before processing data appears to not work all of the time
-- ...
+- I'll fill this in once I get some feedback.
 
 ### BLE
 - multi device support with selection when connecting, naming devices
