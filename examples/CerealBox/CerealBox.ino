@@ -1,4 +1,4 @@
-#include "LineScale.h"
+#include <lineScale.h>
 
 LineScale* linescale;
 
@@ -10,7 +10,7 @@ void setup() {
 
     linescale = new LineScale();
     linescale->setDebug(true); // set the debug and print what is happening in the library
-    linescale->setCallback(newMeasurementCallback);  // register a callback when data is updated
+    linescale->setDataCallback(newMeasurementCallback);  // register a callback when data is updated
    
     if (linescale->connect()){
         Serial.println("Connected to LineScale!");
