@@ -47,7 +47,7 @@ The LineScale's responsiveness to commands depends on whether the screen is **lo
 
 
 #### **Lock Mode Behavior**:  
-  - The screen **will not enter lock mode** while navigating menus. This prevents a **"Request PC or Bluetooth online command"** from working. `fff`
+  - The screen **will not enter lock mode** while navigating menus. This prevents a **"Request PC or Bluetooth online command"** from working.
   - If left idle outside of menus, the device will lock based on user settings.
 
 #### **Min and Max**:
