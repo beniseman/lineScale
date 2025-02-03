@@ -55,10 +55,6 @@ const unsigned long DOUBLE_CLICK_TIMEOUT = 250;  // Time window to detect a doub
 
 const unsigned long HOLD_TIME = 3000;  // Time in ms required to trigger a hold event
 
-
-
-
-
 //void OnDataSent(const uint8_t* mac_addr, esp_now_send_status_t status) {
 //Serial.print("\r\nLast Packet Send Status:\t");
 //Serial.println(status == ESP_NOW_SEND_SUCCESS ? "Delivery Success" : "Delivery Fail");
@@ -145,8 +141,13 @@ void updateOLED() {
   display.setTextSize(2);
   display.setTextColor(SSD1306_WHITE);
 
-  // Create max force text
-  String maxForceText = String(myData.maxValue, 2) + " " + String(myData.unit);
+  String maxForceText;
+  if (strcmp(myData.unit, "kN") == 0) {
+    maxForceText = String(myData.maxValue, 2);  // Keep two decimal places for kN
+  } else {
+    maxForceText = String(int(round(myData.maxValue)));  // Round and cast to int for other units
+  }
+  maxForceText += String(myData.unit);  // Append unit with space
 
   // Get width of max force text
   display.getTextBounds(maxForceText.c_str(), 0, 0, &x1, &y1, &textWidth, &textHeight);
@@ -221,29 +222,27 @@ void loop() {
       updateOLED();  // try putting this is in the callback and see what happens. 1-2 second lag even with flags!
     } else {
       display.clearDisplay();
-      
-      
-display.setTextSize(1);
-    display.setTextColor(SSD1306_WHITE);
 
-    String noDataText = "No incoming data :(";
-    int16_t x1, y1;
-    uint16_t textWidth, textHeight;
-    display.getTextBounds(noDataText.c_str(), 0, 0, &x1, &y1, &textWidth, &textHeight);
-    
-    int xPos = (SCREEN_WIDTH - textWidth) / 2;  // Center horizontally
-    int yPos = (SCREEN_HEIGHT - textHeight) / 2; // Center vertically
-    
-    display.setCursor(xPos, yPos);
-    display.print(noDataText);
+
+      display.setTextSize(1);
+      display.setTextColor(SSD1306_WHITE);
+
+      String noDataText = "No incoming data :(";
+      int16_t x1, y1;
+      uint16_t textWidth, textHeight;
+      display.getTextBounds(noDataText.c_str(), 0, 0, &x1, &y1, &textWidth, &textHeight);
+
+      int xPos = (SCREEN_WIDTH - textWidth) / 2;    // Center horizontally
+      int yPos = (SCREEN_HEIGHT - textHeight) / 2;  // Center vertically
+
+      display.setCursor(xPos, yPos);
+      display.print(noDataText);
 
 
       display.display();
-    }    
+    }
   }
 }
-
-
 
 void processButton() {
   int reading = digitalRead(BUTTON_PIN);
@@ -320,7 +319,7 @@ void handleDoubleClick() {
 
 // Function to handle a hold event
 void handleHold() {
-  isUpdatingOLED=true;
+  isUpdatingOLED = true;
   Serial.println("Hold");
   // Configure BUTTON_PIN as a wake-up source on HIGH signal (since button is active high)
   esp_sleep_enable_ext0_wakeup((gpio_num_t)BUTTON_PIN, HIGH);
@@ -328,22 +327,22 @@ void handleHold() {
   Serial.println("ESP32 will sleep now. Press the button to wake up.");
   display.clearDisplay();
   display.setTextColor(SSD1306_WHITE);
-    display.setTextSize(1);
-    String noDataText = "Going to sleep. Press button to wake.";
-    int16_t x1, y1;
-    uint16_t textWidth, textHeight;
-    display.getTextBounds(noDataText.c_str(), 0, 0, &x1, &y1, &textWidth, &textHeight);
-    
-    int xPos = (SCREEN_WIDTH - textWidth) / 2;  // Center horizontally
-    int yPos = (SCREEN_HEIGHT - textHeight) / 2; // Center vertically
-    
-    display.setCursor(xPos, yPos);
-    display.print(noDataText);
+  display.setTextSize(1);
+  String noDataText = "Going to sleep. Press button to wake.";
+  int16_t x1, y1;
+  uint16_t textWidth, textHeight;
+  display.getTextBounds(noDataText.c_str(), 0, 0, &x1, &y1, &textWidth, &textHeight);
+
+  int xPos = (SCREEN_WIDTH - textWidth) / 2;    // Center horizontally
+  int yPos = (SCREEN_HEIGHT - textHeight) / 2;  // Center vertically
+
+  display.setCursor(xPos, yPos);
+  display.print(noDataText);
 
 
-      display.display();
-  delay(5000);  // Short delay to ensure the message gets printed
-display.ssd1306_command(SSD1306_DISPLAYOFF); // Turn screen off
+  display.display();
+  delay(5000);                                  // Short delay to ensure the message gets printed
+  display.ssd1306_command(SSD1306_DISPLAYOFF);  // Turn screen off
   // Put ESP32 into deep sleep
   esp_deep_sleep_start();
 }
@@ -358,10 +357,8 @@ void sendResponse() {
 
   Serial.println("Sending response...");
 
-  // esp_now_send(senderMac, (uint8_t *)&responseMessage, sizeof(responseMessage));
-  // esp_now_send(broadcastAddress, (uint8_t *)&responseMessage, sizeof(responseMessage));
-  // Send message via ESP-NOW
 
+  //ESPNOW does not verify receipt when in broadcast mode, so spam 40 messages hoping that some will get through.
   for (int i = 0; i < 40; i++) {
     esp_err_t result = esp_now_send(broadcastAddress, (uint8_t*)&responseMessage, sizeof(responseMessage));
     //esp_err_t result = esp_now_send(senderMac, (uint8_t*)&responseMessage, sizeof(responseMessage));
