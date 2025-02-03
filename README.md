@@ -160,6 +160,15 @@ The LineScale's responsiveness to commands depends on whether the screen is **lo
 ### LORA
 - add support for LORA modules to further extend range
 
+### Custom PCBs
+#### Base Station
+  - powered by 18650
+  - footprint for optional LORA module
+
+#### Remote viewer
+  - small and light so it is comfortable on the harness
+  - 150-300mAh battery?
+
 ## Acknowledgements
 Much thanks to Andy Reidrich for his contributions to the slackline world and for enabling developments like this by releasing the lineScale command protocol. 
 
