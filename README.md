@@ -26,7 +26,6 @@ The **LineScale** library is an early-stage, experimental library for interfacin
 - [Acknowledgements](#acknowledgements)
 
 
-
 ## Understanding How the LineScale Works
 
 #### **Data Stream**
@@ -174,6 +173,6 @@ Much thanks to Andy Reidrich for his contributions to the slackline world and fo
 
 This library is based on [Central mode (client) BLE UART for ESP32](https://github.com/ThingEngineer/ESP32_BLE_client_uart/tree/master) by [Josh Campbell](https://github.com/ThingEngineer). I was relieved to find it, as none of the other BLE client sketches included in various libraries were able to interact with charcteristics without crashing.
 
-I also referenced [PyLS3](https://gitlab.com/bjri/pyls3) by [Björn Riske](https://gitlab.com/bjoernr) and [ESP-NOW Two-Way Communication Between ESP32 Boards](https://randomnerdtutorials.com/esp-now-two-way-communication-esp32/) by [Rui Santos](https://randomnerdtutorials.com).
+I also referenced [PyLS3](https://gitlab.com/bjri/pyls3) by [Björn Riske](https://gitlab.com/bjoernr) and [ESP-NOW Two-Way Communication Between ESP32 Boards](https://randomnerdtutorials.com/esp-now-two-way-communication-esp32/) among many others by [Rui Santos](https://randomnerdtutorials.com).
 
 
