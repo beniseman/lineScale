@@ -1,3 +1,5 @@
+[![Arduino Library Manager](https://www.ardu-badge.com/badge/lineScale.svg?)](https://www.ardu-badge.com/lineScale)
+
 # LineScale Library v0.1.2 (alpha)
 
 ## Overview
