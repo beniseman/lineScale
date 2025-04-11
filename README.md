@@ -1,4 +1,4 @@
-# LineScale Library v0.1.1 (alpha)
+# LineScale Library v0.1.2 (alpha)
 
 ## Overview
 
