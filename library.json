@@ -1,0 +1,28 @@
+{
+  "name": "lineScale",
+  "version": "0.1.0",
+  "author": "Ben Iseman",
+  "maintainer": "ben.iseman@gmail.com",
+  "sentence": "A library for interfacing with the LineScale via BLE.",
+  "paragraph": "Provides functionality to connect to the LineScale.",
+  "category": "Sensors",
+  "url": "https://github.com/beniseman/lineScale",
+  "architectures": [
+    "esp32"
+  ],
+  "keywords": [
+    "linescale",
+    "ls3",
+    "ls2",
+    "ls3i",
+    "slackline",
+    "linegrip",
+    "loadcell"
+  ],
+  "dependencies": [
+    {
+      "name": "ESP32 BLE Arduino",
+      "url": "https://github.com/nkolban/ESP32_BLE_Arduino"
+    }
+  ]
+}
