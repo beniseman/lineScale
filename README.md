@@ -1,6 +1,9 @@
 [![Arduino Library](https://img.shields.io/badge/Arduino-Library-00979D?logo=arduino&logoColor=white&style=flat)](https://www.ardu-badge.com/lineScale)
 [![Arduino Library Manager](https://www.ardu-badge.com/badge/lineScale.svg?)](https://www.ardu-badge.com/lineScale)
 [![PlatformIO Registry](https://badges.registry.platformio.org/packages/beniseman/library/lineScale.svg)](https://registry.platformio.org/libraries/beniseman/lineScale)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![GitHub release](https://img.shields.io/github/v/release/beniseman/lineScale)](https://github.com/beniseman/lineScale/releases)
+[![GitHub issues](https://img.shields.io/github/issues/beniseman/lineScale)](https://github.com/beniseman/lineScale/issues)
 
 # LineScale Library v0.1.2 (alpha)
 
