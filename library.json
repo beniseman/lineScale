@@ -1,6 +1,6 @@
 {
   "name": "lineScale",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "author": "Ben Iseman",
   "maintainer": "ben.iseman@gmail.com",
   "sentence": "A library for interfacing with the LineScale via BLE.",
@@ -18,11 +18,5 @@
     "slackline",
     "linegrip",
     "loadcell"
-  ],
-  "dependencies": [
-    {
-      "name": "ESP32 BLE Arduino",
-      "url": "https://github.com/nkolban/ESP32_BLE_Arduino"
-    }
   ]
 }
