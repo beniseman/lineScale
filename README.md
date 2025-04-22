@@ -178,7 +178,7 @@ The LineScale's responsiveness to commands depends on whether the screen is **lo
 ## Acknowledgements
 Much thanks to Andy Reidrich for his contributions to the slackline world and for enabling developments like this by releasing the lineScale command protocol. 
 
-This library is based on [Central mode (client) BLE UART for ESP32](https://github.com/ThingEngineer/ESP32_BLE_client_uart/tree/master) by [Josh Campbell](https://github.com/ThingEngineer). I was relieved to find it, as none of the other BLE client sketches included in various libraries were able to interact with charcteristics without crashing.
+This library is based on [Central mode (client) BLE UART for ESP32](https://github.com/ThingEngineer/ESP32_BLE_client_uart/tree/master) by [Josh Campbell](https://github.com/ThingEngineer). I was relieved to find it, as none of the other BLE client sketches included in various libraries were able to interact with charcteristics without crashing. As it turns out, the issue was that I was trying to read the characteristic when all I had to do was use the notify callback. 
 
 I also referenced [PyLS3](https://gitlab.com/bjri/pyls3) by [Björn Riske](https://gitlab.com/bjoernr) and [ESP-NOW Two-Way Communication Between ESP32 Boards](https://randomnerdtutorials.com/esp-now-two-way-communication-esp32/) by [Rui Santos](https://randomnerdtutorials.com).
 
